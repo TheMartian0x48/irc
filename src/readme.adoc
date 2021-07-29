@@ -8,7 +8,40 @@ Aditya Kumar Singh <singhaditya399@gmail.com>
 
 == Little information about files
 
+===  Client
+
+`client.cpp` and `client.hpp` are for Client class which will store the information about client
+
+=== Client Thread
+
+`client_thread.cpp` and `client_thread.hpp` is for `ClientThread` class which will handle client thread.
+
 === Global
 
-* `global.hpp` : global variable definition
-* `global.cpp` : global vairable declaration
+`global.hpp` and `global.cpp` is used for global variable so that global vairable can be used easily in different files.
+
+=== IRC Exception
+
+`irc_exception.hpp` and `irc_exception.cpp` to throw some error. 
+
+=== Server
+
+`server.hpp` and `server.cpp` is used for storing information like version, date of creation etc. about current server.
+
+=== Tcp Reader
+
+`tcp_reader.cpp` and `tcp_reader.hpp` implement `TcpReader` class which will read data till `\r\n` from tcp socket.
+
+=== Tcp Writer
+
+`tcp_writer.cpp` and `tcp_writer.hpp` implement `TcpWriter` class which is used to writing string to tcp socket.
+
+
+=== Thread Safe Map
+
+`thread_safe_map.hpp` and `thread_safe_map.cpp` is used for implementation of a generic thread safe map. So that we can use it for  storing client information so that it can be used by different client threads.
+
+
+[IMPORTANT]
+====
+Have any feedback or suggestion. You are most welcome to share. link:https://forms.gle/MqgPNWHt8LA61xG58[Link to feedback form]
