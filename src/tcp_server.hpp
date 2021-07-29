@@ -41,8 +41,9 @@ class TcpServer {
   struct addrinfo *GetAddrresses(struct addrinfo *);
   void CreateSocketAndBind(struct addrinfo *);
   bool IsSocketCreationSuccessfulFor(struct addrinfo *);
-  void SetHostAddress(struct addrinfo *);
+  std::string GetHostAddress(struct addrinfo *);
   void * GetInAddr(const struct sockaddr *);
+  void CreateClientThread(int);
 };
 
 #endif  // IRC_SRC_TCP_SERVER_HPP_

@@ -1,7 +1,10 @@
 #include "tcp_server.hpp"
-#include "server.hpp"
 
 #include <ctime>
+#include <thread>
+
+#include "client_thread.hpp"
+#include "server.hpp"
 
 extern Server irc_server;
 
@@ -11,9 +14,7 @@ TcpServer::TcpServer(const std::string &host_name, const std::string &port) {
   port_ = port;
 }
 
-TcpServer::~TcpServer() {
-  close(server_fd_);
-}
+TcpServer::~TcpServer() { close(server_fd_); }
 
 void TcpServer::Start() {
   CreateSocket();
@@ -59,7 +60,7 @@ void TcpServer::CreateSocketAndBind(struct addrinfo *addresses) {
               << std::endl;
     exit(1);
   }
-  SetHostAddress(address);
+  host_address_ = GetHostAddress(address);
 }
 
 bool TcpServer::IsSocketCreationSuccessfulFor(struct addrinfo *address) {
@@ -71,11 +72,11 @@ bool TcpServer::IsSocketCreationSuccessfulFor(struct addrinfo *address) {
   return false;
 }
 
-void TcpServer::SetHostAddress(struct addrinfo *address) {
+std::string TcpServer::GetHostAddress(struct addrinfo *address) {
   char host_address[INET6_ADDRSTRLEN];
   inet_ntop(address->ai_family, GetInAddr((struct sockaddr *)address->ai_addr),
             host_address, sizeof host_address);
-  host_address_ = std::string(host_address);
+  return std::string(host_address);
 }
 
 void *TcpServer::GetInAddr(const struct sockaddr *sa) {
@@ -107,4 +108,20 @@ void TcpServer::Listen(int backlog) {
     std::cerr << "Listen() : unable to listen" << std::endl;
     exit(1);
   }
+}
+
+void TcpServer::Accept() {
+  struct sockaddr_storage client_address_information;
+  while (true) {
+    socklen_t sin_size = sizeof client_address_information;
+    int client_fd = accept(
+        server_fd_, (struct sockaddr *)&client_address_information, &sin_size);
+    if (client_fd == -1) continue;
+    CreateClientThread(client_fd);
+  }
+}
+
+void TcpServer::CreateClientThread(int client_fd) {
+  std::thread client_thread((ClientThread(client_fd)));
+  client_thread.detach();
 }
