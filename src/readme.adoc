@@ -1,0 +1,14 @@
+= Internet Replay Chat
+Aditya Kumar Singh <singhaditya399@gmail.com>
+// Metadata:
+:description: Information about files
+:toc: 
+:icons: font
+
+
+== Little information about files
+
+=== Global
+
+* `global.hpp` : global variable definition
+* `global.cpp` : global vairable declaration
