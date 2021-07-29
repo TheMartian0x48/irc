@@ -4,6 +4,14 @@ Aditya Kumar Singh <singhaditya399@gmail.com>
 :description: Information about files
 :toc: 
 :icons: font
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
 
 
 == Little information about files
