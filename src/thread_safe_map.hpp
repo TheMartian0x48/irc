@@ -14,10 +14,6 @@ class ThreadSafeMap {
 
  public:
   ThreadSafeMap() = default;
-  ThreadSafeMap(const ThreadSafeMap&) = delete;
-  ThreadSafeMap(ThreadSafeMap&&) = delete;
-  ThreadSafeMap& operator=(const ThreadSafeMap&) = delete;
-  ThreadSafeMap& operator=(ThreadSafeMap&&) = delete;
   ~ThreadSafeMap();
   bool empty();
   int size();
