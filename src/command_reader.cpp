@@ -17,34 +17,34 @@ std::shared_ptr<Command> CommandReader::CreateCommand(
     std::vector<std::string> &parameter) {
   if (command == "Nick") {
     return std::shared_ptr<Command>(
-        new Nick(std::move(prefix), std::move(parameter)));
+        new Nick(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "USER") {
     return std::shared_ptr<Command>(
-        new User(std::move(prefix), std::move(parameter)));
+        new User(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "QUIT") {
     return nullptr;
   } else if (command == "PRIVMSG") {
     return std::shared_ptr<Command>(
-        new Privmsg(std::move(prefix), std::move(parameter)));
+        new Privmsg(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "NOTICE") {
     return std::shared_ptr<Command>(
-        new Notice(std::move(prefix), std::move(parameter)));
+        new Notice(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "PING") {
     return std::shared_ptr<Command>(
-        new Ping(std::move(prefix), std::move(parameter)));
+        new Ping(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "PONG") {
     return std::shared_ptr<Command>(
-        new Pong(std::move(prefix), std::move(parameter)));
+        new Pong(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "MOTD") {
     return std::shared_ptr<Command>(
-        new Motd(std::move(prefix), std::move(parameter)));
+        new Motd(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "LUSERS") {
     return std::shared_ptr<Command>(
-        new Lusers(std::move(prefix), std::move(parameter)));
+        new Lusers(std::move(prefix), std::move(command), std::move(parameter)));
   } else if (command == "WHOIS") {
     return std::shared_ptr<Command>(
-        new Whois(std::move(prefix), std::move(parameter)));
+        new Whois(std::move(prefix), std::move(command), std::move(parameter)));
   }
   return std::shared_ptr<Command>(
-      new Unknown(std::move(command), std::move(parameter)));
+      new Unknown(std::move(prefix), std::move(command), std::move(parameter)));
 }
