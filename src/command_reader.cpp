@@ -22,8 +22,7 @@ std::shared_ptr<Command> CommandReader::CreateCommand(
     return std::shared_ptr<Command>(
         new User(std::move(prefix), std::move(parameter)));
   } else if (command == "QUIT") {
-    return std::shared_ptr<Command>(
-        new Quit(std::move(prefix), std::move(parameter)));
+    return nullptr;
   } else if (command == "PRIVMSG") {
     return std::shared_ptr<Command>(
         new Privmsg(std::move(prefix), std::move(parameter)));
