@@ -19,8 +19,7 @@ class Client {
 
  public:
   Client() = delete;
-  Client(const std::string &, const std::string &, const std::string &,
-         const std::string &, const std::string &, int);
+  Client(const std::string &, int);
   Client(const Client &) = delete;
   Client(Client &&) = delete;
   Client &operator=(const Client &) = delete;
@@ -39,7 +38,7 @@ class Client {
   std::string GetHost() const;
   std::string GetFullClientId() const;
 
-  void Send(const std::string &);
+  bool Send(const std::string &);
 };
 
 #endif  // IRC_SRC_CLIENT_HPP_

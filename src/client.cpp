@@ -10,13 +10,7 @@
 
 extern ThreadSafeMap<std::string, std::shared_ptr<Client>> active_users;
 
-Client::Client(const std::string &nick, const std::string &user,
-               const std::string &full_name, const std::string &user_mode,
-               const std::string &host, int fd) {
-  nick_ = nick;
-  user_ = user;
-  full_name_ = full_name;
-  user_mode_ = user_mode;
+Client::Client(const std::string &host, int fd) {
   host_ = host;
   fd_ = fd;
   tcp_writer_ = TcpWriter();
@@ -60,11 +54,13 @@ std::string Client::GetFullClientId() const {
   return nick_ + "!" + user_ + "@" + host_;
 }
 
-void Client::Send(const std::string &message) {
+bool Client::Send(const std::string &message) {
   std::lock_guard<std::mutex> lock(mutex_);
   try {
     tcp_writer_.Write(fd_, message);
+    return true;
   } catch (const IrcException &e) {
     std::cerr << e.what() << std::endl;
   }
+  return false;
 }
