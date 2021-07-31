@@ -25,7 +25,7 @@ void TcpServer::Start() {
 void TcpServer::CreateSocket() {
   struct addrinfo hint;
   InitialiseHint(&hint);
-  auto addresses = GetAddrresses(&hint);
+  auto addresses = GetAddresses(&hint);
   CreateSocketAndBind(addresses);
   freeaddrinfo(addresses);
 }
@@ -37,7 +37,7 @@ void TcpServer::InitialiseHint(struct addrinfo *hint) {
   hint->ai_socktype = SOCK_STREAM;
 }
 
-struct addrinfo *TcpServer::GetAddrresses(struct addrinfo *hint) {
+struct addrinfo *TcpServer::GetAddresses(struct addrinfo *hint) {
   struct addrinfo *addresses;
   int has_error =
       getaddrinfo(host_name_.c_str(), port_.c_str(), hint, &addresses);
@@ -117,11 +117,21 @@ void TcpServer::Accept() {
     int client_fd = accept(
         server_fd_, (struct sockaddr *)&client_address_information, &sin_size);
     if (client_fd == -1) continue;
-    CreateClientThread(client_fd);
+
+    std::string client_host = GetHostAddress(&client_address_information);
+    CreateClientThread(client_fd, client_host);
   }
 }
 
-void TcpServer::CreateClientThread(int client_fd) {
-  std::thread client_thread((ClientThread(client_fd)));
+void TcpServer::CreateClientThread(int client_fd, std::string &client_host) {
+  std::thread client_thread((ClientThread(client_fd, client_host)));
   client_thread.detach();
+}
+
+std::string TcpServer::GetHostAddress(struct sockaddr_storage *address) {
+  char host_address[INET6_ADDRSTRLEN];
+  inet_ntop(((struct sockaddr *)address)->sa_family,
+            GetInAddr((struct sockaddr *)address), host_address,
+            sizeof host_address);
+  return std::string(host_address);
 }

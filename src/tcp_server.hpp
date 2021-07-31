@@ -38,12 +38,13 @@ class TcpServer {
   void Listen(int);
   void InitialiseHint(struct addrinfo *);
   void InitialiseServer();
-  struct addrinfo *GetAddrresses(struct addrinfo *);
+  struct addrinfo *GetAddresses(struct addrinfo *);
   void CreateSocketAndBind(struct addrinfo *);
   bool IsSocketCreationSuccessfulFor(struct addrinfo *);
   std::string GetHostAddress(struct addrinfo *);
-  void * GetInAddr(const struct sockaddr *);
-  void CreateClientThread(int);
+  std::string GetHostAddress(struct sockaddr_storage *);
+  void *GetInAddr(const struct sockaddr *);
+  void CreateClientThread(int, std::string &);
 };
 
 #endif  // IRC_SRC_TCP_SERVER_HPP_
