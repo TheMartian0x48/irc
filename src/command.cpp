@@ -73,6 +73,7 @@ void Nick::SendReply(std::shared_ptr<Client> client) {
 bool Nick::SetNickName(std::shared_ptr<Client> client) {
   if (Validate().first == false) return false;
   client->SetNick(parameter_.front());
+  return true;
 }
 
 /**************************************************************************
@@ -100,6 +101,7 @@ bool User::SetUserAndFullName(std::shared_ptr<Client> client) {
   if (Validate().first == false) return false;
   client->SetUser(parameter_.front());
   client->SetFullName(parameter_.back());
+  return true;
 }
 /**************************************************************************
             QUIT Command
