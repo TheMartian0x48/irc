@@ -6,20 +6,21 @@
 #include <string>
 #include <unordered_map>
 
-template<class KEY, class VALUE>
+#include "client.hpp"
+
 class ThreadSafeMap {
  private:
-  std::unordered_map<KEY, VALUE> mp_;
+  std::unordered_map<std::string, std::shared_ptr<Client>> mp_;
   mutable std::mutex mutex_;
 
  public:
   ThreadSafeMap() = default;
-  ~ThreadSafeMap();
+  // ~ThreadSafeMap();
   bool empty();
   int size();
-  VALUE find(const KEY &);
-  bool insert(std::pair<KEY, VALUE>);
-  void remove(KEY);
+  std::shared_ptr<Client> find(const std::string &);
+  bool insert(std::pair<std::string, std::shared_ptr<Client>>);
+  void remove(std::string);
 };
 
 #endif  // IRC_SRC_THREAD_SAFE_MAP_HPP_
