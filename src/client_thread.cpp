@@ -8,7 +8,7 @@
 #include "global.hpp"
 #include "reply.hpp"
 
-extern ThreadSafeMap<std::string, std::shared_ptr<Client>> active_users;
+extern ThreadSafeMap active_users;
 extern Server irc_server;
 
 ClientThread::ClientThread(int fd, std::string& client_host) {

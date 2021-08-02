@@ -9,6 +9,6 @@
 #include "thread_safe_map.hpp"
 
 extern Server irc_server;
-extern ThreadSafeMap<std::string, std::shared_ptr<Client>> active_users;
+extern ThreadSafeMap active_users;
 
 #endif  // IRC_SRC_GLOBAL_HPP_

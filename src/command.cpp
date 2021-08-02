@@ -7,7 +7,7 @@
 #include "global.hpp"
 #include "reply.hpp"
 
-extern ThreadSafeMap<std::string, std::shared_ptr<Client>> active_users;
+extern ThreadSafeMap active_users;
 
 bool IsSpecialCharacter(char ch) {
   return (ch >= 0x5B && ch <= 0x60) || (ch >= 0x7B && ch <= 0x7D);

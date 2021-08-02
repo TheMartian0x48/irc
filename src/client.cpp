@@ -8,7 +8,7 @@
 #include "irc_exception.hpp"
 #include "server.hpp"
 
-extern ThreadSafeMap<std::string, std::shared_ptr<Client>> active_users;
+extern ThreadSafeMap active_users;
 
 Client::Client(const std::string &host, int fd) {
   host_ = host;
