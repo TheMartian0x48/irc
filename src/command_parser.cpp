@@ -11,18 +11,18 @@ CommandParser::Parse(const std::string& message) {
   int n = message.size(), i = 0;
   if (message[i] == ':') {
     i++;
-    while (i < n && isspace(message[i]) == false) {
+    while (i < n && message[i] != ' ') {
       prefix += message[i++];
     }
     i++;
   }
-  while (i < n && isspace(message[i]) == false) {
+  while (i < n && message[i] != ' ') {
     command += message[i++];
   }
 
   std::string tmp;
   for (++i; i < n; i++) {
-    if (isspace(message[i]) == true) {
+    if (message[i] == ' ') {
       if (tmp.empty() == false) {
         parameter.push_back(tmp);
         tmp.clear();
@@ -37,6 +37,8 @@ CommandParser::Parse(const std::string& message) {
       }
       parameter.push_back(tmp);
       tmp.clear();
+    } else {
+      tmp += message[i];
     }
   }
   return std::make_tuple(prefix, command, parameter);
