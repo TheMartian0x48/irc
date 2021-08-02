@@ -58,13 +58,13 @@ bool ClientThread::IsReadyToReadCommand() {
 }
 
 bool ClientThread::IsClientActive() {
-  // std::string ping_message = "!" + irc_server.GetHost() + " PING";
+  // std::string ping_message = ":" + irc_server.GetHost() + " PING";
   // if (user_->Send(ping_message) == false) return false;
   return false;
 }
 
 void ClientThread::DestroyUser() {
-  std::string quit_message = "!" + irc_server.GetHost() + " " + IrcError::Quit();
+  std::string quit_message = ":" + irc_server.GetHost() + " " + IrcError::Quit();
   user_->Send(quit_message);
   active_users.remove(user_->GetNick());
   while (user_.use_count() > 1) continue;
@@ -94,7 +94,7 @@ std::pair<bool, bool> ClientThread::HasReadNickAndUserCommand(
     has_read_user = it->SetUserAndFullName(user_);
   } else {
     std::string error_message =
-        "!" + irc_server.GetHost() + " " + IrcError::NotRegistered();
+        ":" + irc_server.GetHost() + " " + IrcError::NotRegistered();
     user_->Send(error_message);
   }
   return {has_read_nick, has_read_user};
@@ -102,15 +102,15 @@ std::pair<bool, bool> ClientThread::HasReadNickAndUserCommand(
 
 void ClientThread::SendWelcomeMessage() {
   auto welcome_message =
-      "!" + irc_server.GetHost() + " " +
+      ":" + irc_server.GetHost() + " " +
       Welcome(user_->GetNick(), user_->GetUser(), user_->GetHost());
   auto yourhost_message =
-      "!" + irc_server.GetHost() + " " +
+      ":" + irc_server.GetHost() + " " +
       YourHost(irc_server.GetName(), irc_server.GetVersion());
   auto created_message =
-      "!" + irc_server.GetHost() + " " + Created(irc_server.GetCreationDate());
+      ":" + irc_server.GetHost() + " " + Created(irc_server.GetCreationDate());
   auto myinfo_message =
-      "!" + irc_server.GetHost() + " " +
+      ":" + irc_server.GetHost() + " " +
       MyInfo(irc_server.GetName(), irc_server.GetVersion(), "ao", "mtov");
 
   user_->Send(welcome_message);
